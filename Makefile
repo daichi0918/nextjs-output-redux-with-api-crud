@@ -4,8 +4,8 @@ dcu-dev:
 	docker-compose up -d
 
 
-# front-ssh:
-# 	docker exec -it wise_market_web sh
+front-ssh:
+	docker exec -it nestjs_output_with_crud_frontend sh
 backend-ssh:
 	docker exec -it nestjs_output_with_crud_backend sh
 db-ssh:
