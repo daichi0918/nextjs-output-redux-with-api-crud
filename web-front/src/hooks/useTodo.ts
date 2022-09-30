@@ -3,19 +3,27 @@
  *
  * @package hooks
  */
-import { useState, useCallback } from 'react';
-import { INIT_TODO_LIST, INIT_UNIQUE_ID } from '@/constants/data';
+import { useState, useCallback, useEffect } from 'react';
+import { fetchTodoListApi } from '@/apis/todoApi';
+import { INIT_UNIQUE_ID } from '@/constants/data';
+import { TodoType } from '@/interfaces/Todo';
 
 /**
  * useTodo
  */
 export const useTodo = () => {
   /* todolist */
-  const [originTodoList, setOriginTodoList] = useState(INIT_TODO_LIST);
+  const [originTodoList, setOriginTodoList] = useState<Array<TodoType>>([]);
   /* todo採番ID */
   const [uniqueId, setUniqueId] = useState(INIT_UNIQUE_ID);
 
   /* actions */
+
+  const fetchTodoList = useCallback(async (): Promise<void> => {
+    const data = await fetchTodoListApi();
+    setOriginTodoList(typeof data === 'object' ? data : []);
+  }, []);
+
   /**
    * Todo新規登録処理
    * @param {string} title
@@ -29,8 +37,8 @@ export const useTodo = () => {
         {
           id: nextUniqueId,
           title: title,
-          content: content
-        }
+          content: content,
+        },
       ];
       // todolistを更新
       setOriginTodoList(newTodo);
@@ -54,7 +62,7 @@ export const useTodo = () => {
           return {
             id: todo.id,
             title: title,
-            content: content
+            content: content,
           };
         }
 
@@ -75,9 +83,7 @@ export const useTodo = () => {
       if (window.confirm(`「${targetTitle}」のtodoを削除しますか？`)) {
         // 削除するid以外のtodoリストを再編集
         // filterを用いた方法
-        const newTodoList = originTodoList.filter(
-          (todo) => todo.id !== targetId
-        );
+        const newTodoList = originTodoList.filter((todo) => todo.id !== targetId);
 
         // 削除するTodoの配列番号を取り出してspliceで削除する方法もある
         // const newTodoList = [...todoList];
@@ -91,10 +97,14 @@ export const useTodo = () => {
     [originTodoList]
   );
 
+  useEffect(() => {
+    fetchTodoList();
+  }, [fetchTodoList]);
+
   return {
     originTodoList,
     addTodo,
     updateTodo,
-    deleteTodo
+    deleteTodo,
   };
 };
