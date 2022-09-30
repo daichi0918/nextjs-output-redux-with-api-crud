@@ -8,23 +8,44 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 export class TodoService {
   constructor(private prisma: PrismaService) {}
 
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  async create(createTodoDto: CreateTodoDto) {
+    return await this.prisma.todo.create({
+      data: {
+        title: createTodoDto.title,
+        content: createTodoDto.content,
+      },
+    });
   }
 
   async findAll(): Promise<Todo[]> {
-    return this.prisma.todo.findMany();
+    return await this.prisma.todo.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`;
+  async findOne(id: number) {
+    return await this.prisma.todo.findFirst({
+      where: {
+        id,
+      },
+    });
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+  async update(id: number, updateTodoDto: UpdateTodoDto) {
+    return this.prisma.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        title: updateTodoDto.title,
+        content: updateTodoDto.content,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} todo`;
+  async remove(id: number) {
+    return await this.prisma.todo.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

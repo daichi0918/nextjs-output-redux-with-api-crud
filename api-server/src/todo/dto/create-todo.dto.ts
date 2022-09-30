@@ -1,13 +1,10 @@
-import {
-  IsNotEmpty,
-  IsEmail,
-  IsNumber,
-  IsString,
-  MinLength,
-  MaxLength,
-} from 'class-validator';
+import { IsNotEmpty, MaxLength } from 'class-validator';
 
 export class CreateTodoDto {
+  @IsNotEmpty()
+  @MaxLength(255)
   title: string;
+
+  @IsNotEmpty()
   content: string;
 }
