@@ -1,0 +1,1 @@
+# nextjs-output-with-api-crud
