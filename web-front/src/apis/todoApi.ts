@@ -73,3 +73,19 @@ export const updateTodoApi = async (id: number, title: string, content: string) 
     }
   }
 };
+
+/**
+ * Todo削除のAPI接続処理
+ * @param id
+ * @returns
+ */
+export const deleteTodoApi = async (id: number) => {
+  try {
+    const { data }: AxiosResponse<TodoType> = await globalAxios.delete(`/todo/${id}`);
+    return data;
+  } catch (err) {
+    if (isAxiosError(err)) {
+      return err.code;
+    }
+  }
+};

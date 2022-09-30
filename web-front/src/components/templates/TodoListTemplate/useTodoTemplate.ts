@@ -8,23 +8,25 @@ import { TodoType } from '@/interfaces/Todo';
 import { EventType } from '@/interfaces/Event';
 
 type Params = {
-  originTodoList: Array<TodoType>
-}
+  originTodoList: Array<TodoType>;
+  deleteTodo: (targetId: number) => Promise<void>;
+};
 
 type StatesType = {
-  searchKeyword: string,
-  showTodoList: Array<TodoType>
-}
+  searchKeyword: string;
+  showTodoList: Array<TodoType>;
+};
 
 type ActionsType = {
-  handleChangeSearchKeyword: EventType['onChangeInput']
-}
+  handleChangeSearchKeyword: EventType['onChangeInput'];
+  handleDeleteTodo: (targetId: number, targetTitle: string) => void;
+};
 
 /**
  * useTodoTemplate
  * @param originTodoList
  */
-export const useTodoTemplate = ({ originTodoList }: Params) => {
+export const useTodoTemplate = ({ originTodoList, deleteTodo }: Params) => {
   /* 検索キーワード */
   const [searchKeyword, setSearchKeyword] = useState('');
   /* 表示用TodoList */
@@ -49,12 +51,29 @@ export const useTodoTemplate = ({ originTodoList }: Params) => {
     []
   );
 
+  /**
+   * Todo削除処理
+   * @param { number } targetId
+   * @param { string }targetTitle
+   */
+  const handleDeleteTodo = useCallback(
+    (targetId: number, targetTitle: string) => {
+      console.log('aaaa');
+      if (window.confirm(`「${targetTitle}」のtodoを削除しますか？`)) {
+        console.log('hhhhh');
+        deleteTodo(targetId);
+      }
+    },
+    [deleteTodo]
+  );
+
   const states: StatesType = {
     searchKeyword,
-    showTodoList
+    showTodoList,
   };
   const actions: ActionsType = {
-    handleChangeSearchKeyword
+    handleChangeSearchKeyword,
+    handleDeleteTodo,
   };
 
   return [states, actions] as const;

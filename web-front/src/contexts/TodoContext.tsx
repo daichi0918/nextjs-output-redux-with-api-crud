@@ -8,14 +8,14 @@ import { TodoType } from '@/interfaces/Todo';
 import { useTodo } from '@/hooks/useTodo';
 
 type Props = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 interface ContextInterface {
   originTodoList: Array<TodoType>;
-  addTodo: (title: string, content: string) => void;
-  updateTodo: (id: number, title: string, content: string) => void;
-  deleteTodo: (targetId: number, targetTitle: string) => void;
+  addTodo: (title: string, content: string) => Promise<void>;
+  updateTodo: (id: number, title: string, content: string) => Promise<void>;
+  deleteTodo: (targetId: number) => Promise<void>;
 }
 
 /**
@@ -38,7 +38,7 @@ export const TodoProvider: FC<Props> = ({ children }) => {
         originTodoList,
         addTodo,
         updateTodo,
-        deleteTodo
+        deleteTodo,
       }}
     >
       {children}
