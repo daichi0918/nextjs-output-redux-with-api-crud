@@ -13,6 +13,6 @@ datasource db {
 
 model Todo {
   id Int @default(autoincrement()) @id
-  title String
-  content String
+  title String @db.MediumText
+  content String @db.Text
 }
