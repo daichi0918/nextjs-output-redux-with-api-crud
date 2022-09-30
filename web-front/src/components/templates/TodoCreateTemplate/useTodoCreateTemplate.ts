@@ -9,19 +9,19 @@ import { NAVIGATION_PATH } from '@/constants/navigation';
 import { EventType } from '@/interfaces/Event';
 
 type Param = {
-  addTodo: (title: string, content: string) => void
-}
+  addTodo: (title: string, content: string) => void;
+};
 
 type StatesType = {
-  inputTitle: string,
-  inputContent: string
-}
+  inputTitle: string;
+  inputContent: string;
+};
 
 type ActionsType = {
-  handleChangeTitle: EventType['onChangeInput'],
-  handleChangeContent: EventType['onChangeTextArea'],
-  handleCreateTodo: EventType['onSubmit']
-}
+  handleChangeTitle: EventType['onChangeInput'];
+  handleChangeContent: EventType['onChangeTextArea'];
+  handleCreateTodo: EventType['onSubmit'];
+};
 
 /**
  * useTodoCreateTemplate
@@ -37,30 +37,24 @@ export const useTodoCreateTemplate = ({ addTodo }: Param) => {
    * 「title」変更処理
    * @type {function(*): void}
    */
-  const handleChangeTitle: EventType['onChangeInput'] = useCallback(
-    (e) => setInputTitle(e.target.value),
-    []
-  );
+  const handleChangeTitle: EventType['onChangeInput'] = useCallback((e) => setInputTitle(e.target.value), []);
 
   /**
    * 「content」変更処理
    * @type {function(*): void}
    */
-  const handleChangeContent: EventType['onChangeTextArea'] = useCallback(
-    (e) => setInputContent(e.target.value),
-    []
-  );
+  const handleChangeContent: EventType['onChangeTextArea'] = useCallback((e) => setInputContent(e.target.value), []);
 
   /**
    * Todo追加処理
    * @type {(function(*): void)|*}
    */
   const handleCreateTodo: EventType['onSubmit'] = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
       if (inputTitle !== '' && inputContent !== '') {
         addTodo(inputTitle, inputContent);
-        router.push(NAVIGATION_PATH.TOP)
+        router.push(NAVIGATION_PATH.TOP);
       }
     },
     [addTodo, inputTitle, inputContent, router]
@@ -68,13 +62,13 @@ export const useTodoCreateTemplate = ({ addTodo }: Param) => {
 
   const states: StatesType = {
     inputTitle,
-    inputContent
+    inputContent,
   };
 
   const actions: ActionsType = {
     handleChangeTitle,
     handleChangeContent,
-    handleCreateTodo
+    handleCreateTodo,
   };
 
   return [states, actions] as const;

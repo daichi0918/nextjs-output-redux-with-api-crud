@@ -4,8 +4,7 @@
  * @package hooks
  */
 import { useState, useCallback, useEffect } from 'react';
-import { fetchTodoListApi } from '@/apis/todoApi';
-import { INIT_UNIQUE_ID } from '@/constants/data';
+import { fetchTodoListApi, createTodoApi } from '@/apis/todoApi';
 import { TodoType } from '@/interfaces/Todo';
 
 /**
@@ -14,8 +13,6 @@ import { TodoType } from '@/interfaces/Todo';
 export const useTodo = () => {
   /* todolist */
   const [originTodoList, setOriginTodoList] = useState<Array<TodoType>>([]);
-  /* todo採番ID */
-  const [uniqueId, setUniqueId] = useState(INIT_UNIQUE_ID);
 
   /* actions */
 
@@ -30,22 +27,19 @@ export const useTodo = () => {
    * @param {string} content
    */
   const addTodo = useCallback(
-    (title: string, content: string) => {
-      const nextUniqueId = uniqueId + 1;
-      const newTodo = [
+    async (title: string, content: string) => {
+      const todo = await createTodoApi(title, content);
+      if (typeof todo !== 'object') return;
+      setOriginTodoList([
         ...originTodoList,
         {
-          id: nextUniqueId,
-          title: title,
-          content: content,
+          id: todo.id,
+          title: todo.title,
+          content: todo.content,
         },
-      ];
-      // todolistを更新
-      setOriginTodoList(newTodo);
-      // 採番IDを更新
-      setUniqueId(nextUniqueId);
+      ]);
     },
-    [originTodoList, uniqueId]
+    [originTodoList]
   );
 
   /**

@@ -3,12 +3,12 @@ import { globalAxios, isAxiosError } from '@/apis/config';
 import { TodoType } from '@/interfaces/Todo';
 
 /**
- * fetchTodoListApi
+ * Todoリスト取得のAPI接続処理
  * @returns
  */
 export const fetchTodoListApi = async () => {
   try {
-    const { data }: AxiosResponse<Array<TodoType>> = await globalAxios.get('todo');
+    const { data }: AxiosResponse<Array<TodoType>> = await globalAxios.get('/todo');
     return data;
   } catch (err) {
     if (isAxiosError(err)) {
@@ -18,13 +18,33 @@ export const fetchTodoListApi = async () => {
 };
 
 /**
- * fetchTodoDetailApi
+ * idに紐づく単一のTodo取得のAPI接続処理
  * @param id
  * @returns
  */
 export const fetchTodoDetailApi = async (id: number) => {
   try {
-    const { data }: AxiosResponse<TodoType> = await globalAxios.get(`todo/${id}`);
+    const { data }: AxiosResponse<TodoType> = await globalAxios.get(`/todo/${id}`);
+    return data;
+  } catch (err) {
+    if (isAxiosError(err)) {
+      return err.code;
+    }
+  }
+};
+
+/**
+ * Todo新規登録のAPI接続処理
+ * @param title
+ * @param content
+ * @returns
+ */
+export const createTodoApi = async (title: string, content: string) => {
+  try {
+    const { data }: AxiosResponse<TodoType> = await globalAxios.post('/todo', {
+      title,
+      content,
+    });
     return data;
   } catch (err) {
     if (isAxiosError(err)) {
