@@ -4,7 +4,7 @@
  * @package hooks
  */
 import { useState, useCallback, useEffect } from 'react';
-import { fetchTodoListApi, createTodoApi } from '@/apis/todoApi';
+import { fetchTodoListApi, createTodoApi, updateTodoApi } from '@/apis/todoApi';
 import { TodoType } from '@/interfaces/Todo';
 
 /**
@@ -47,16 +47,17 @@ export const useTodo = () => {
    * @param {number} id
    * @param {string} title
    * @param {string} content
-   * @type {(function(*, *, *): void)|*}
    */
   const updateTodo = useCallback(
-    (id: number, title: string, content: string) => {
+    async (id: number, title: string, content: string) => {
+      const responseTodo = await updateTodoApi(id, title, content);
+      if (typeof responseTodo !== 'object') return;
       const updatedTodoList = originTodoList.map((todo) => {
-        if (id === todo.id) {
+        if (responseTodo.id === todo.id) {
           return {
-            id: todo.id,
-            title: title,
-            content: content,
+            id: responseTodo.id,
+            title: responseTodo.title,
+            content: responseTodo.content,
           };
         }
 
