@@ -1,5 +1,15 @@
 version: "3.9"
 services:
+  frontend:
+    container_name: nestjs_output_with_crud_frontend
+    build: ./web-front
+    tty: true
+    ports:
+      - 80:3000
+    environment:
+      TZ: Asia/Tokyo # タイムゾーンを日本時刻に設定
+    security_opt:
+      - seccomp:unconfined
   backend:
     container_name: nestjs_output_with_crud_backend
     build: ./api-server
@@ -11,9 +21,8 @@ services:
       - /etc/localtime:/etc/localtime:ro # タイムゾーンを日本時刻に設定
     environment:
       TZ: Asia/Tokyo # タイムゾーンを日本時刻に設定
-    # command: sh -c 'yarn && yarn start'
     ports:
-      - 80:3000
+      - 8080:3000
     security_opt:
       - seccomp:unconfined
 
