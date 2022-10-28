@@ -6,8 +6,8 @@ WORKDIR /backend
 
 COPY . .
 
-RUN npm install --non-interactive --frozen-lockfile
+# RUN npm install --non-interactive --frozen-lockfile
 
-RUN npm run build
+# RUN npm run build
 
-CMD ["npm", "run", "start"]
+# CMD ["npm", "run", "start"]
