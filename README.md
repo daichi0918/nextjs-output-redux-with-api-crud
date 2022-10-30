@@ -68,6 +68,22 @@ url: http://localhost
 
 ## 補足
 
+### DB 関連の情報
+
+- 以下の情報を元に「sequel ace」などを用いて DB コンテナにアクセスすれば、DB のデータの状態を確認できる
+
+```
+DBMS: mysql: 8.0
+host: 127.0.0.1
+database: NEXTJS_OUTPUT_WITH_CRUD_DB
+user: user
+password: pass
+port: 3306
+```
+
+- sequel ace について
+- https://qiita.com/ucan-lab/items/b1304eee2157dbef7774
+
 ### DB のデータを初期化したい場合
 
 prisma は migration のロールバック機能がないため、コンテナのボリュームを削除するしかない。 コンテナが起動している状態で、以下のコマンドを実行してボリュームを削除する
