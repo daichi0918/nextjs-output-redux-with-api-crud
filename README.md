@@ -34,6 +34,10 @@
 
 ## 環境構築
 
+※dockerを使用しているのでPCに入っていない場合はインストールをお願いします。
+
+https://matsuand.github.io/docs.docker.jp.onthefly/desktop/mac/install/
+
 ### 1. docker image を作成
 
 ```
@@ -113,5 +117,5 @@ docker ps
 以下のコマンドで各コンテナのログを確認
 
 ```
-docker logs [コンテナID]
+docker logs -f [コンテナID]
 ```
