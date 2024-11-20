@@ -14,22 +14,22 @@ services:
   #   security_opt:
   #     - seccomp:unconfined
   #   command: sh -c 'npm install && npm run dev'
-  # backend:
-  #   container_name: nestjs_output_with_crud_backend
-  #   build: ./api-server
-  #   tty: true
-  #   depends_on:
-  #     - db
-  #   volumes:
-  #     - ./api-server:/backend
-  #     - /etc/localtime:/etc/localtime:ro # タイムゾーンを日本時刻に設定
-  #   environment:
-  #     TZ: Asia/Tokyo # タイムゾーンを日本時刻に設定
-  #   ports:
-  #     - 8080:3000
-  #   security_opt:
-  #     - seccomp:unconfined
-  #   command: sh -c 'npm install && npm run start:dev'
+  backend:
+    container_name: nestjs_output_with_crud_backend
+    build: ./api-server
+    tty: true
+    depends_on:
+      - db
+    volumes:
+      - ./api-server:/backend
+      - /etc/localtime:/etc/localtime:ro # タイムゾーンを日本時刻に設定
+    environment:
+      TZ: Asia/Tokyo # タイムゾーンを日本時刻に設定
+    ports:
+      - 8080:3000
+    security_opt:
+      - seccomp:unconfined
+    command: sh -c 'npm install && npm run start:dev'
 
   db:
     container_name: nestjs_output_with_crud_db
