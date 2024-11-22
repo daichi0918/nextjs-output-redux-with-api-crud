@@ -1,0 +1,19 @@
+h1.title {
+  text-align: center;
+  font-family: Times New Roman, Times, serif;
+  color: #fff;
+  font-size: 48px;
+}
+
+div.contents_container {
+  width: 80%;
+  margin: 40px auto;
+}
+
+div.content {
+  margin-top: 40px;
+}
+
+.area {
+  margin-top: 40px;
+}
