@@ -14,8 +14,7 @@ import {
   faPenToSquare,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
-import { NAVIGATION_LIST, NAVIGATION_PATH } from '@/constants/navigation';
-import { useRouter } from 'next/navigation';
+import { NAVIGATION_PATH } from '@/constants/navigation';
 
 interface TodoListProps {
   showTodoList: Array<TodoType>;

@@ -2,6 +2,7 @@
 
 // import { INITIAL_TODO_LIST, INITIAL_TODO_LIST_LENGTH } from '@/constants/data';
 import { TodoType } from '@/interfaces/Todo';
+import axios from 'axios';
 import React, {
   FC,
   ReactNode,
@@ -29,11 +30,17 @@ export const TodoProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8080/api/todo`);
-      const data = await response.json();
-      console.log(data);
-      setOriginalTodoList(data);
-      setTodoListLength(data.length);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_END_POINT}/api/todo`
+        );
+        const data = response.data;
+        console.log(data);
+        setOriginalTodoList(data);
+        setTodoListLength(data.length);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     fetchData();
