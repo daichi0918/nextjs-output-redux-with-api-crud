@@ -35,7 +35,6 @@ export const TodoProvider: FC<Props> = ({ children }) => {
           `${process.env.NEXT_PUBLIC_END_POINT}/api/todo`
         );
         const data = response.data;
-        console.log(data);
         setOriginalTodoList(data);
         setTodoListLength(data.length);
       } catch (error) {
