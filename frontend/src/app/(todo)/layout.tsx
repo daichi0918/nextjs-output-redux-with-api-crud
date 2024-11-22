@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { TodoProvider } from '@/contexts/TodoContext';
+import NavList from '@/components/organisms/NavList';
 
 export const metadata: Metadata = {
   title: 'nextjs output with api crud',
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html>
       <body>
         <div className="container">
+          <NavList />
           <TodoProvider>{children}</TodoProvider>
         </div>
       </body>

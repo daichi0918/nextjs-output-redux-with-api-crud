@@ -24,25 +24,28 @@ interface TodoContextInterface {
 
 export const TodoContext = createContext({} as TodoContextInterface);
 
+export const fetchData = async (
+  setOriginalTodoList: Function,
+  setTodoListLength: Function
+) => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_END_POINT}/api/todo`
+    );
+    const data = response.data;
+    setOriginalTodoList(data);
+    setTodoListLength(data.length);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
 export const TodoProvider: FC<Props> = ({ children }) => {
   const [originalTodoList, setOriginalTodoList] = useState<Array<TodoType>>([]);
   const [todoListLength, setTodoListLength] = useState<number>(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_END_POINT}/api/todo`
-        );
-        const data = response.data;
-        setOriginalTodoList(data);
-        setTodoListLength(data.length);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
+    fetchData(setOriginalTodoList, setTodoListLength);
   }, []);
   return (
     <TodoContext.Provider
