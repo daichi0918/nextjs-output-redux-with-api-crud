@@ -7,6 +7,7 @@ import { EventType } from '@/interfaces/Event';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { TodoContext } from '@/contexts/TodoContext';
 import axios from 'axios';
+import { deleteTodoApi } from '@/apis/todoApi';
 export const useTodo = () => {
   /* state定義 */
   const { originalTodoList, setOriginalTodoList } = useContext(TodoContext);
@@ -40,24 +41,14 @@ export const useTodo = () => {
   const handleDeleteTodoTask = useCallback(
     async (targetId: number, taskName: string) => {
       if (window.confirm(`「${taskName}」を削除していいですか？`)) {
-        try {
-          // APIリクエストの実行
-          await axios.delete(
-            `${process.env.NEXT_PUBLIC_END_POINT}/api/todo/${targetId}`
-          );
+        const deleteTodo = await deleteTodoApi(targetId);
 
-          // 成功時のローカル状態更新
-          const newTodoList = originalTodoList.filter(
-            (todo) => todo.id !== targetId
-          );
-          setOriginalTodoList(newTodoList);
+        if (typeof deleteTodo !== 'object') return;
+        setOriginalTodoList(
+          originalTodoList.filter((todo) => todo.id !== deleteTodo.id)
+        );
 
-          console.log(`Todo ID ${targetId} を削除しました`);
-        } catch (error) {
-          // エラー処理
-          console.error('Todoの削除に失敗しました:', error);
-          alert('Todoの削除に失敗しました。');
-        }
+        console.log(`Todo ID ${targetId} を削除しました`);
       }
     },
     [originalTodoList, setOriginalTodoList]
