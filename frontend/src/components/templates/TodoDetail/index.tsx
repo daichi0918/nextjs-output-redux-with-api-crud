@@ -5,12 +5,14 @@
  * @package templates
  */
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { TodoContext } from '../../../contexts/TodoContext';
 import { TextAreaForm } from '../../atoms/TextAreaForm';
 import InputForm from '@/components/atoms/InputForm';
 import styles from './styles.module.css';
 import { BaseLayout } from '@/components/organisms/BaseLayout';
+import { fetchTodoDetailApi } from '@/apis/todoApi';
+import { TodoType } from '@/interfaces/Todo';
 /**
  * @param {id: string } id
  * @return {JSX.Element}
@@ -21,8 +23,18 @@ export const TodoDetailTemplate = ({ id }: { id: string }) => {
    */
   const { originalTodoList } = useContext(TodoContext);
 
-  // 該当のtodoを取得
-  const targetTodo = originalTodoList.filter((todo) => todo.id === Number(id));
+  const [targetTodo, setTargetTodo] = useState<TodoType | null>(null);
+
+  useEffect(() => {
+    const fetchTodo = async () => {
+      const todo = await fetchTodoDetailApi(Number(id));
+      if (todo && typeof todo !== 'string') {
+        setTargetTodo(todo);
+      }
+    };
+
+    fetchTodo();
+  }, [id]);
 
   return (
     <>
@@ -30,12 +42,12 @@ export const TodoDetailTemplate = ({ id }: { id: string }) => {
         <BaseLayout title={'ToDo Detail'}>
           <form className={styles.contents_container}>
             <div className={styles.area}>
-              <InputForm value={targetTodo[0].title} readOnly={true} />
+              <InputForm value={targetTodo?.title} readOnly={true} />
             </div>
             <div className={styles.area}>
               <TextAreaForm
                 className={styles.textarea}
-                value={targetTodo[0].content || ''}
+                value={targetTodo?.content || ''}
                 readOnly={true}
               />
             </div>

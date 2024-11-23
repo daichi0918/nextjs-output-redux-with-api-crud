@@ -73,7 +73,7 @@ export const useTodoEdit = ({ id }: { id: string }) => {
       try {
         // PATCHリクエストでTodoを更新
         const response = await axios.patch(
-          `${process.env.NEXT_PUBLIC_END_POINT}/api/todo/${targetId}`,
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/todo/${targetId}`,
           updatedTodo
         );
 
