@@ -10,6 +10,7 @@ import React, {
   createContext,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 
@@ -30,6 +31,16 @@ export const TodoProvider: FC<Props> = ({ children }) => {
   const [originalTodoList, setOriginalTodoList] = useState<Array<TodoType>>([]);
   const [todoListLength, setTodoListLength] = useState<number>(0);
 
+  const contextValue = useMemo(
+    () => ({
+      originalTodoList,
+      setOriginalTodoList,
+      todoListLength,
+      setTodoListLength,
+    }),
+    [originalTodoList, todoListLength] // `originalTodoList`が変わった場合のみ再生成
+  );
+
   const fetchData = useCallback(async () => {
     const data = await fetchTodoListApi();
     setOriginalTodoList(typeof data === 'object' ? data : []);
@@ -39,15 +50,6 @@ export const TodoProvider: FC<Props> = ({ children }) => {
     fetchData();
   }, []);
   return (
-    <TodoContext.Provider
-      value={{
-        originalTodoList,
-        setOriginalTodoList,
-        todoListLength,
-        setTodoListLength,
-      }}
-    >
-      {children}
-    </TodoContext.Provider>
+    <TodoContext.Provider value={contextValue}>{children}</TodoContext.Provider>
   );
 };

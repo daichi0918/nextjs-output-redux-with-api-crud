@@ -37,28 +37,31 @@ export const useTodo = () => {
    * @param { number } targetId
    * @param { string } taskName
    */
-  const handleDeleteTodoTask = async (targetId: number, taskName: string) => {
-    if (window.confirm(`「${taskName}」を削除していいですか？`)) {
-      try {
-        // APIリクエストの実行
-        await axios.delete(
-          `${process.env.NEXT_PUBLIC_END_POINT}/api/todo/${targetId}`
-        );
+  const handleDeleteTodoTask = useCallback(
+    async (targetId: number, taskName: string) => {
+      if (window.confirm(`「${taskName}」を削除していいですか？`)) {
+        try {
+          // APIリクエストの実行
+          await axios.delete(
+            `${process.env.NEXT_PUBLIC_END_POINT}/api/todo/${targetId}`
+          );
 
-        // 成功時のローカル状態更新
-        const newTodoList = originalTodoList.filter(
-          (todo) => todo.id !== targetId
-        );
-        setOriginalTodoList(newTodoList);
+          // 成功時のローカル状態更新
+          const newTodoList = originalTodoList.filter(
+            (todo) => todo.id !== targetId
+          );
+          setOriginalTodoList(newTodoList);
 
-        console.log(`Todo ID ${targetId} を削除しました`);
-      } catch (error) {
-        // エラー処理
-        console.error('Todoの削除に失敗しました:', error);
-        alert('Todoの削除に失敗しました。');
+          console.log(`Todo ID ${targetId} を削除しました`);
+        } catch (error) {
+          // エラー処理
+          console.error('Todoの削除に失敗しました:', error);
+          alert('Todoの削除に失敗しました。');
+        }
       }
-    }
-  };
+    },
+    [originalTodoList, setOriginalTodoList]
+  );
 
   return {
     showTodoList,

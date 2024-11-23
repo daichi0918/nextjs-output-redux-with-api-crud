@@ -5,7 +5,7 @@
  * @package organisms
  */
 import { TodoType } from '@/interfaces/Todo';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,7 +26,7 @@ interface TodoListProps {
  * @param {TodoListProps}props
  * @returns {JSX.Element}
  */
-const TodoList: FC<TodoListProps> = (props) => {
+const TodoList: FC<TodoListProps> = memo((props) => {
   const { showTodoList, handleDeleteTodoTask } = props;
   return (
     <ul className={styles.todolist}>
@@ -59,6 +59,6 @@ const TodoList: FC<TodoListProps> = (props) => {
         ))}
     </ul>
   );
-};
+});
 
 export default TodoList;
