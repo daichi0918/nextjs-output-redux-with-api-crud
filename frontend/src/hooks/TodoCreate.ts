@@ -3,6 +3,7 @@ import { EventType } from '@/interfaces/Event';
 import { TodoContext } from '@/contexts/TodoContext';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { createTodoApi } from '@/apis/todoApi';
 
 export const useTodoCreate = () => {
   const router = useRouter();
@@ -43,22 +44,13 @@ export const useTodoCreate = () => {
     // 入力チェック
     if (inputTitle !== '') {
       try {
-        const newId = todoListLength + 1;
-        // 新規Todoデータ
-        const newTodo = {
-          title: inputTitle,
-          content: textareaContent,
-        };
-
         // POSTリクエストで新しいTodoを送信
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_END_POINT}/api/todo`,
-          newTodo
-        );
-        // サーバーから返されたデータ（新規登録したTodo）を使ってローカル状態を更新
-        const addedTodo = response.data;
-        const newTodoList = [...originalTodoList, addedTodo];
-        setOriginalTodoList(newTodoList);
+        const todo = await createTodoApi(inputTitle, textareaContent);
+        if (typeof todo !== 'object') return;
+        setOriginalTodoList([
+          ...originalTodoList,
+          { id: todo.id, title: todo.title, content: todo.content },
+        ]);
         setTodoListLength((prevLength) => prevLength + 1);
 
         // 入力フォームをリセット
