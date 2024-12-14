@@ -1,4 +1,4 @@
-# nextjs-output-with-api-crud
+# nextjs-output-redux-with-api-crud
 
 ## 技術構成
 
@@ -34,7 +34,7 @@
 
 ## 環境構築
 
-※dockerを使用しているのでPCに入っていない場合はインストールをお願いします。
+※docker を使用しているので PC に入っていない場合はインストールをお願いします。
 
 https://matsuand.github.io/docs.docker.jp.onthefly/desktop/mac/install/
 
