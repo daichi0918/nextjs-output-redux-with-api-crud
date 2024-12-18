@@ -2,7 +2,9 @@ FROM --platform=linux/amd64 node:16-alpine
 
 RUN npm i -g @nestjs/cli
 
-RUN apk add --no-cache libssl1.1
+RUN apk add --no-cache \
+    openssl \
+    libssl1.1
 
 WORKDIR /backend
 
