@@ -9,11 +9,12 @@ import { EventType } from '@/interface/Event';
 import InputForm from '@/components/atoms/InputForm';
 import { BaseLayout } from '@/components/organisms/BaseLayout';
 import TodoList from '@/components/organisms/TodoList';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import { fetchTodoListApi } from '@/apis/todoApi';
 import { fetchAsyncGet, selectTodo } from '@/store/todoSlice';
+import { TodoType } from '@/interface/Todo';
 /**
  * TodoTemplate
  * @returns {JSX.Element}
@@ -39,6 +40,14 @@ export const TodoTopTemplate = () => {
     (e) => setSearchKeyWord(e.target.value),
     []
   );
+  /* 表示用TodoList */
+  const showTodoList = useMemo(() => {
+    const regexp = new RegExp('^' + searchKeyWord, 'i');
+    return originTodoList?.filter((todo: TodoType) => {
+      // 検索キーワードに部分一致したTodoだけを一覧表示する
+      return todo.title.match(regexp);
+    });
+  }, [originTodoList, searchKeyWord]);
 
   /**
    *
@@ -55,7 +64,7 @@ export const TodoTopTemplate = () => {
         </div>
         <div className={styles.area}>
           <TodoList
-            showTodoList={originTodoList}
+            showTodoList={showTodoList}
             handleDeleteTodoTask={() => console.log('aaa')}
           />
         </div>
