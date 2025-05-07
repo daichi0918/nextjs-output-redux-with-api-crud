@@ -106,8 +106,7 @@ export const todoSlice = createSlice({
 
 export const { editTodo, selectedTodo } = todoSlice.actions;
 
-export const selectSelectedTodo = (state: RootState) =>
-  state.todos.selectedTodo;
+export const selectedTodos = (state: RootState) => state.todos.selectedTodo;
 export const selectEditedTodo = (state: RootState) => state.todos.editedTodo;
 export const selectTodo = (state: RootState) => state.todos.todos;
 

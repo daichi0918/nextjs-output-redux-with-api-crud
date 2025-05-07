@@ -11,21 +11,21 @@ import { BaseLayout } from '@/components/organisms/BaseLayout';
 import TodoList from '@/components/organisms/TodoList';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { AppDispatch, RootState } from '@/store';
 import { fetchTodoListApi } from '@/apis/todoApi';
+import { fetchAsyncGet, selectTodo } from '@/store/todoSlice';
 /**
  * TodoTemplate
  * @returns {JSX.Element}
  */
 export const TodoTopTemplate = () => {
   const [searchKeyWord, setSearchKeyWord] = useState<string>('');
-  const dispatch = useDispatch();
-  const originTodoList = useSelector((state: RootState) => state.todos.lists);
+  const dispatch = useDispatch<AppDispatch>();
+  const originTodoList = useSelector(selectTodo);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchTodoListApi();
-      dispatch(setTodoList(typeof data === 'object' ? data : [])); // Redux ストアを更新
+      await dispatch(fetchAsyncGet()); // Redux ストアを更新
     };
     fetchData();
   }, [dispatch]);
