@@ -1,5 +1,4 @@
 import { fetchTodoListApi } from '@/apis/todoApi';
-import { setTodoList } from '@/store/todoSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
