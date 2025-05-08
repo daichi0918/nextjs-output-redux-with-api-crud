@@ -18,18 +18,18 @@ export const fetchAsyncGet = createAsyncThunk('todo/get', async () => {
   return res.data;
 });
 
-export const fetchAsyncCreate = createAsyncThunk<TodoType, TodoType>(
-  'task/post',
-  async (task) => {
-    const res = await axios.post(apiUrl, task, {
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   Authorization: `Bearer ${token}`,
-      // },
-    });
-    return res.data;
-  }
-);
+export const fetchAsyncCreate = createAsyncThunk<
+  TodoType,
+  { title: string; content: string | undefined }
+>('task/post', async (task) => {
+  const res = await axios.post(apiUrl, task, {
+    // headers: {
+    //   "Content-Type": "application/json",
+    //   Authorization: `Bearer ${token}`,
+    // },
+  });
+  return res.data;
+});
 
 export const fetchAsyncUpdate = createAsyncThunk<
   TodoType, // 成功時に返ってくるデータの型

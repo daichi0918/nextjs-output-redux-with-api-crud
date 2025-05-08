@@ -50,9 +50,6 @@ export const TodoTopTemplate = () => {
     });
   }, [originTodoList, searchKeyWord]);
 
-  /**
-   *
-   */
   return (
     <PageContainer>
       <BaseLayout title={'Todo List'}>

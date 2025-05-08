@@ -1,0 +1,17 @@
+.button {
+  display: block;
+  width: 100%;
+  background-color: #f90;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 10px;
+  transition: 0.3s;
+}
