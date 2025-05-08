@@ -15,6 +15,7 @@ import { AppDispatch, RootState } from '@/store';
 import { fetchTodoListApi } from '@/apis/todoApi';
 import { fetchAsyncGet, selectTodo } from '@/store/todoSlice';
 import { TodoType } from '@/interface/Todo';
+import { PageContainer } from '@/components/layouts/PageContainer';
 /**
  * TodoTemplate
  * @returns {JSX.Element}
@@ -53,22 +54,24 @@ export const TodoTopTemplate = () => {
    *
    */
   return (
-    <BaseLayout title={'Todo List'}>
-      <div className={styles.common}>
-        <div className={styles.area}>
-          <InputForm
-            placeholder={'Search Keyword'}
-            value={searchKeyWord}
-            onChange={handleChangeSearchKeyword}
-          />
+    <PageContainer>
+      <BaseLayout title={'Todo List'}>
+        <div className={styles.common}>
+          <div className={styles.area}>
+            <InputForm
+              placeholder={'Search Keyword'}
+              value={searchKeyWord}
+              onChange={handleChangeSearchKeyword}
+            />
+          </div>
+          <div className={styles.area}>
+            <TodoList
+              showTodoList={showTodoList}
+              handleDeleteTodoTask={() => console.log('aaa')}
+            />
+          </div>
         </div>
-        <div className={styles.area}>
-          <TodoList
-            showTodoList={showTodoList}
-            handleDeleteTodoTask={() => console.log('aaa')}
-          />
-        </div>
-      </div>
-    </BaseLayout>
+      </BaseLayout>
+    </PageContainer>
   );
 };

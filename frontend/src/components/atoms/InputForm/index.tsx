@@ -3,9 +3,10 @@
  *
  * @package atoms
  */
-import { memo } from 'react';
+import { memo, ComponentProps } from 'react';
 import styles from './styles.module.css';
-type Props = JSX.IntrinsicElements['input'];
+// type Props = JSX.IntrinsicElements['input'];
+type Props = ComponentProps<'input'>;
 
 /**
  * @param {InputFormProps} props
@@ -24,5 +25,7 @@ const InputForm = memo((props: Props) => {
     />
   );
 });
+
+InputForm.displayName = 'InputForm';
 
 export default InputForm;
