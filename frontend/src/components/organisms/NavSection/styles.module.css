@@ -1,0 +1,30 @@
+.navContainer {
+  width: 80%;
+  margin: 40px auto;
+  font-family: Times New Roman, Times, serif;
+}
+
+.ul {
+  width: 100%;
+  padding-left: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.li {
+  text-align: center;
+  list-style-type: none;
+}
+
+.li > a {
+  transition: 0.3s;
+  display: block;
+  background-color: #fff;
+  text-decoration: none;
+  color: teal;
+  font-size: 24px;
+  font-weight: 700;
+  width: 80px;
+  padding: 10px 20px;
+  border-radius: 10px;
+}

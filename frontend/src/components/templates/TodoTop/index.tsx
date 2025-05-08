@@ -7,7 +7,7 @@
 import styles from './styles.module.css';
 import { EventType } from '@/interface/Event';
 import InputForm from '@/components/atoms/InputForm';
-import { BaseLayout } from '@/components/organisms/BaseLayout';
+import { BaseLayout } from '@/components/layouts/BaseLayout';
 import TodoList from '@/components/organisms/TodoList';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
