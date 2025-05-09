@@ -12,7 +12,7 @@ import TodoList from '@/components/organisms/TodoList';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { fetchAsyncGet, selectTodo } from '@/store/todoSlice';
+import { fetchAsyncGetAll, selectTodo } from '@/store/todoSlice';
 import { TodoType } from '@/interface/Todo';
 import { PageContainer } from '@/components/layouts/PageContainer';
 /**
@@ -26,7 +26,7 @@ export const TodoTopTemplate = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchAsyncGet()); // Redux ストアを更新
+      await dispatch(fetchAsyncGetAll()); // Redux ストアを更新
     };
     fetchData();
   }, [dispatch]);

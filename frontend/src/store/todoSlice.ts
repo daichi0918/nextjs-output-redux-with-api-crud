@@ -9,7 +9,7 @@ import { type RootState } from './index';
 const apiUrl = 'http://localhost:8080/api/todo';
 // const token = localStorage.localJWT;
 
-export const fetchAsyncGet = createAsyncThunk('todo/get', async () => {
+export const fetchAsyncGetAll = createAsyncThunk('todo/get', async () => {
   const res = await axios.get(apiUrl, {
     // headers: {
     //   Authorization: `Bearer ${token}`,
@@ -17,6 +17,14 @@ export const fetchAsyncGet = createAsyncThunk('todo/get', async () => {
   });
   return res.data;
 });
+
+export const fetchAsyncGetById = createAsyncThunk<TodoType, number>(
+  'todo/get/detail',
+  async (id) => {
+    const res = await axios.get(`${apiUrl}/${id}`);
+    return res.data;
+  }
+);
 
 export const fetchAsyncCreate = createAsyncThunk<
   TodoType,
@@ -73,10 +81,16 @@ export const todoSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAsyncGet.fulfilled, (state, action) => {
+    builder.addCase(fetchAsyncGetAll.fulfilled, (state, action) => {
       return {
         ...state,
         todos: action.payload,
+      };
+    });
+    builder.addCase(fetchAsyncGetById.fulfilled, (state, action) => {
+      return {
+        ...state,
+        editedTodo: action.payload,
       };
     });
     builder.addCase(fetchAsyncCreate.fulfilled, (state, action) => {

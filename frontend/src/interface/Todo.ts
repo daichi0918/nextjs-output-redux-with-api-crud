@@ -10,5 +10,5 @@
 export interface TodoType {
   id: number;
   title: string;
-  content: string;
+  content: string | undefined;
 }
