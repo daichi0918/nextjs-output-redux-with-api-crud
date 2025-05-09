@@ -12,7 +12,11 @@ import TodoList from '@/components/organisms/TodoList';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { fetchAsyncGetAll, selectTodo } from '@/store/todoSlice';
+import {
+  fetchAsyncDelete,
+  fetchAsyncGetAll,
+  selectTodo,
+} from '@/store/todoSlice';
 import { TodoType } from '@/interface/Todo';
 import { PageContainer } from '@/components/layouts/PageContainer';
 /**
@@ -61,10 +65,7 @@ export const TodoTopTemplate = () => {
             />
           </div>
           <div className={styles.area}>
-            <TodoList
-              showTodoList={showTodoList}
-              handleDeleteTodoTask={() => console.log('aaa')}
-            />
+            <TodoList showTodoList={showTodoList} />
           </div>
         </div>
       </BaseLayout>

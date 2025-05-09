@@ -5,7 +5,7 @@
  * @package organisms
  */
 import { TodoType } from '@/interface/Todo';
-import { FC, memo } from 'react';
+import { FC, memo, useCallback } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,10 +14,12 @@ import {
   faPenToSquare,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/store';
+import { fetchAsyncDelete } from '@/store/todoSlice';
 
 interface TodoListProps {
   showTodoList: Array<TodoType>;
-  handleDeleteTodoTask: (targetId: number, taskName: string) => void;
 }
 
 /**
@@ -26,7 +28,17 @@ interface TodoListProps {
  * @returns {JSX.Element}
  */
 const TodoList: FC<TodoListProps> = memo((props) => {
-  const { showTodoList, handleDeleteTodoTask } = props;
+  const { showTodoList } = props;
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleDeleteTodoTask = useCallback(
+    async (id: number, title: string) => {
+      if (window.confirm(`${title}を削除していいですか？`)) {
+        await dispatch(fetchAsyncDelete(id));
+      }
+    },
+    [dispatch]
+  );
   return (
     <ul className={styles.todolist}>
       {showTodoList.length > 0 &&

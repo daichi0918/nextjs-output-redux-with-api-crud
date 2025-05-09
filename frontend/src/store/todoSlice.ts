@@ -96,13 +96,13 @@ export const todoSlice = createSlice({
     builder.addCase(fetchAsyncCreate.fulfilled, (state, action) => {
       return {
         ...state,
-        tasks: [...state.todos, action.payload],
+        todos: [...state.todos, action.payload],
       };
     });
     builder.addCase(fetchAsyncUpdate.fulfilled, (state, action) => {
       return {
         ...state,
-        tasks: state.todos.map((t) =>
+        todos: state.todos.map((t) =>
           t.id === action.payload.id ? action.payload : t
         ),
         selectedTodo: action.payload,
@@ -111,8 +111,8 @@ export const todoSlice = createSlice({
     builder.addCase(fetchAsyncDelete.fulfilled, (state, action) => {
       return {
         ...state,
-        tasks: state.todos.filter((t) => t.id !== Number(action.payload)),
-        selectedTask: { id: 0, title: '', content: '' },
+        todos: state.todos.filter((t) => t.id !== Number(action.payload)),
+        selectedTodo: { id: 0, title: '', content: '' },
       };
     });
   },
