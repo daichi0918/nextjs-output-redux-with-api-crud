@@ -35,16 +35,10 @@ const TodoList: FC<TodoListProps> = memo((props) => {
           <li className={styles.todoitem} key={todo.id}>
             <span className={styles.task}>{todo.title}</span>
             <div className={styles.todo_top_icons}>
-              <Link
-                href={`${NAVIGATION_PATH.DETAIL}${todo.id}`}
-                className={styles.icon_wrapper}
-              >
+              <Link href={`/detail/${todo.id}`} className={styles.icon_wrapper}>
                 <FontAwesomeIcon icon={faFile} size="lg" />
               </Link>
-              <Link
-                href={`${NAVIGATION_PATH.EDIT}${todo.id}`}
-                className={styles.icon_wrapper}
-              >
+              <Link href={`/edit/${todo.id}`} className={styles.icon_wrapper}>
                 <FontAwesomeIcon icon={faPenToSquare} size="lg" />
               </Link>
               <div className={styles.icon_wrapper}>
@@ -60,5 +54,7 @@ const TodoList: FC<TodoListProps> = memo((props) => {
     </ul>
   );
 });
+
+TodoList.displayName = 'TodoList';
 
 export default TodoList;

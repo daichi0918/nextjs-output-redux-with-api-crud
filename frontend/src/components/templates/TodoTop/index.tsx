@@ -12,7 +12,6 @@ import TodoList from '@/components/organisms/TodoList';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { fetchTodoListApi } from '@/apis/todoApi';
 import { fetchAsyncGet, selectTodo } from '@/store/todoSlice';
 import { TodoType } from '@/interface/Todo';
 import { PageContainer } from '@/components/layouts/PageContainer';
